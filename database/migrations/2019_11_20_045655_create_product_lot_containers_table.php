@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductLotsTable extends Migration
+class CreateProductLotContainersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,16 @@ class CreateProductLotsTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_lots', function (Blueprint $table) {
+        Schema::create('product_lot_containers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('product_id');
-            $table->string('lot_number', 15);
+            $table->unsignedBigInteger('product_lot_id');
+            $table->unsignedBigInteger('storage_location_id');
+            $table->unsignedBigInteger('packaging_id');
+            $table->unsignedInteger('container_num');
             $table->decimal('initial', 9, 1);
+            $table->decimal('used', 9, 1);
+            $table->decimal('spilled', 9, 1);
             $table->decimal('remaining', 9, 1);
-            $table->decimal('held', 9, 1);
-            $table->decimal('available', 9, 1);
-            $table->date('date_released');
-            $table->date('date_certified');
-            $table->date('date_expires');
             $table->timestamps();
         });
     }
@@ -35,6 +34,6 @@ class CreateProductLotsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_lots');
+        Schema::dropIfExists('product_lot_containers');
     }
 }
