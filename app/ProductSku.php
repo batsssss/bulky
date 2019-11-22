@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * Class ProductSku
+ * @package App
+ * @property $id
+ * @property $size
+ * @property $price
+ */
 class ProductSku extends Model
 {
     /**

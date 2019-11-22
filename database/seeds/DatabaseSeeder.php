@@ -4,10 +4,13 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Faker\Factory as Faker;
+use Illuminate\Database\Eloquent\Model;
 use App\Product;
 use App\ProductLot;
 use App\ProductSku;
 use App\ProductLotContainer;
+use App\Order;
+use App\OrderItem;
 
 class DatabaseSeeder extends Seeder
 {
@@ -119,6 +122,66 @@ class DatabaseSeeder extends Seeder
                 }
             }
         });
+
+        factory(Order::class, 10)->create()->each(function ($order) use($faker) {
+            /** @var Order $order */
+
+            $numberOfItems = rand(1,3);
+
+            for ($i = 1; $i <= $numberOfItems; $i++) {
+
+                $quantity = $faker->numberBetween(1, 5);
+
+                /** @var Product $product */
+                $product = $this->getRandomProduct();
+                /** @var ProductSku $productSku */
+                $productSku = $this->getRandomProductSku($product->id);
+
+                $totalAmount = floatval($quantity * $productSku->size);
+
+                $productLots = $this->getProductLots($product->id);
+
+                $reservedProductLotId = null;
+                $reserved = 0.0;
+                /** @var DateTime $scheduledDate */
+                $scheduledDate = clone $order->order_date;
+                $scheduledDate->add(new DateInterval('P' . $product->lead_time . 'D'));
+
+                foreach ($productLots as $productLot) {
+                    /** @var ProductLot $productLot */
+                    if ($productLot->available >= $totalAmount) {
+                        $reservedProductLotId = $productLot->id;
+                        $reserved = $totalAmount;
+                        $scheduledDate = $order->order_date;
+
+                        $productLot->reserved = $productLot->reserved + $reserved;
+                        $productLot->available = $productLot->available - $reserved;
+
+                        ProductLot::where('id', $productLot->id)
+                            ->update([
+                                'reserved' => $productLot->reserved,
+                                'available' => $productLot->available
+                            ]);
+
+                        break;
+                    }
+                }
+
+                $order->orderItems()->save(factory(OrderItem::class)->make([
+                    'catalogue_num' => $product->catalogue_num,
+                    'product_name' => $product->product_name,
+                    'product_sku_id' => $productSku->id,
+                    'product_lot_id' => $reservedProductLotId,
+                    'size' => $productSku->size,
+                    'price' => $productSku->price,
+                    'quantity' => $quantity,
+                    'reserved' => $reserved,
+                    'scheduled_date' => $scheduledDate
+                ]));
+
+            }
+
+        });
     }
 
     /**
@@ -189,7 +252,26 @@ class DatabaseSeeder extends Seeder
      * @return Collection
      */
     private function getProductLots($productId) {
-        return DB::table('product_lots')->where('product_id', $productId)->get();
+        return DB::table('product_lots')
+            ->where('product_id', $productId)
+            ->orderBy('date_expires')
+            ->orderBy('available')
+            ->get();
+    }
+
+    /**
+     * @param int $productId
+     * @return Model
+     */
+    private function getRandomProductSku($productId) {
+        return DB::table('product_skus')->where('product_id', $productId)->inRandomOrder()->first();
+    }
+
+    /**
+     * @return Model
+     */
+    private function getRandomProduct() {
+        return DB::table('products')->inRandomOrder()->first();
     }
 
     /**

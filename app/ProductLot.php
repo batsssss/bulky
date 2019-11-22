@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * Class ProductLot
+ * @package App
+ * @property $id
+ * @property $lot_number
+ * @property $reserved
+ * @property $available
+ */
 class ProductLot extends Model
 {
     /**
