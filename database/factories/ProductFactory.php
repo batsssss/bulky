@@ -8,7 +8,8 @@ use App\Product;
 
 $factory->define(Product::class, function (Faker $faker) {
     return [
-        'catalogue_num' => strtoupper($faker->lexify('??')) . $faker->numerify('###'),
+        'catalogue_num' => strtoupper($faker->lexify('??'))
+            . $faker->unique()->numerify('###'),
         'product_name' => $faker->randomElement(['6-Methyl', '4-Propyl', '3-Benzyl', '2-Acetyl', '1-Deoxy'])
             . ' '
             . $faker->randomElement(['azido', 'amino', 'fluoro', 'iodo', 'chloro'])

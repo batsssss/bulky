@@ -5,6 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * Class Product
+ * @package App
+ * @property $id
+ * @property $years_to_recertify
+ */
 class Product extends Model
 {
 

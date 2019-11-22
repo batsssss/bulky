@@ -3,9 +3,11 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Faker\Factory as Faker;
 use App\Product;
 use App\ProductLot;
 use App\ProductSku;
+use App\ProductLotContainer;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,69 +18,149 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker::create();
+
         DB::table('users')->insert([
             'name' => 'Barbara',
             'email' => 'barbara.goss@ryerson.ca',
             'password' => bcrypt('bulky')
         ]);
 
-        DB::table('packagings')->insert([
-            'name' => '2mL Vial',
-            'gram_tare_start' => 2.0,
-            'gram_tare_end' => 2.8,
-            'up_to_sku_size' => 100
-        ]);
+        foreach ($this->generatePackagings() as $generatedPackaging) {
+            DB::table('packagings')->insert($generatedPackaging);
+        }
 
-        DB::table('packagings')->insert([
-            'name' => '8mL Vial',
-            'gram_tare_start' => 8.8,
-            'gram_tare_end' => 10.2,
-            'up_to_sku_size' => 2000
-        ]);
-
-        DB::table('packagings')->insert([
-            'name' => '15mL Jar',
-            'gram_tare_start' => 31.4,
-            'gram_tare_end' => 34.4,
-            'up_to_sku_size' => 5000
-        ]);
-
-        DB::table('packagings')->insert([
-            'name' => '30mL Jar',
-            'gram_tare_start' => 48.9,
-            'gram_tare_end' => 51.0,
-            'up_to_sku_size' => 10000
-        ]);
-
-        DB::table('storage_locations')->insert([
-            'name' => 'Freezer 1'
-        ]);
-
-        DB::table('storage_locations')->insert([
-            'name' => 'Freezer 2'
-        ]);
+        foreach ($this->generateStorageLocations() as $generatedLocation) {
+            DB::table('storage_locations')->insert($generatedLocation);
+        }
 
         $packagings = $this->getPackagings();
 
-        factory(Product::class, 20)->create()->each(function ($product) use ($packagings) {
-
+        factory(Product::class, 20)->create()->each(function ($product) use ($packagings, $faker) {
             /** @var Product $product */
-            $product->productLots()->createMany(factory(ProductLot::class, rand(1,3))->make()->toArray());
 
             $sizes = $this->skuSizes();
-            $basePrice = $this->getRandomBaseSkuPrice();
+            $basePrice = $this->randomBaseSkuPrice();
             $baseSize = $sizes[0];
+            $sizesCount = count($sizes);
 
-            for ($i = 1; $i <= count($sizes); $i++) {
+            for ($i = 1; $i <= $sizesCount; $i++) {
                 $size = $sizes[$i - 1];
 
                 $product->productSkus()->save(factory(ProductSku::class)->make([
-                    'packaging_id' => $this->getSkuPackaging($packagings, $size),
+                    'packaging_id' => $this->getPackagingBySize($packagings, $size),
                     'size' => $size,
-                    'price' => $this->getRandomSkuPrice($basePrice, $baseSize, $size, $i)
+                    'price' => $this->generateSkuPrice($basePrice, $baseSize, $size, $i)
                 ]));
             }
+
+            $yearsToRecertify = $product->years_to_recertify;
+
+            $numberOfLots = rand(1,3);
+
+            for ($i = 1; $i <= $numberOfLots; $i++) {
+                $initial = $faker->randomFloat(1, $baseSize, 2 * ($sizes[$sizesCount - 1]));
+                $current = $faker->randomFloat(1, 0, floor($initial));
+                $lotDate = $faker->dateTimeBetween('-5 years');
+                $expiryDate = clone $lotDate;
+
+                $product->productLots()->save(factory(ProductLot::class)->make([
+                    'initial' => $initial,
+                    'remaining' => $current,
+                    'available' => $current,
+                    'date_released' => $lotDate,
+                    'date_certified' => $lotDate,
+                    'date_expires' => $expiryDate->add(new DateInterval('P' . $yearsToRecertify . 'Y'))
+                ]));
+            }
+
+            $productLots = $this->getProductLots($product->id);
+
+            foreach ($productLots as $productLot) {
+
+                $containerAttributes = [
+                    'product_lot_id' => $productLot->id,
+                    'storage_location_id' => $this->getRandomStorageLocationId()
+                ];
+
+                $numberOfContainers = rand(1,2);
+
+                if ($numberOfContainers == 1) {
+
+                    $containerAttributes = array_merge($containerAttributes, [
+                        'packaging_id' => $this->getPackagingBySize($packagings, ceil($productLot->initial)),
+                        'container_num' => 1,
+                        'initial' => $productLot->initial,
+                        'used' => $productLot->initial - $productLot->remaining,
+                        'remaining' => $productLot->remaining
+                    ]);
+
+                    factory(ProductLotContainer::class)->create($containerAttributes);
+
+                } else {
+                    $containerInitial = $faker->randomFloat(1, 1, (floor($productLot->remaining) - 1));
+                    $containerRemaining = $containerInitial;
+
+                    for ($i = 1; $i <= $numberOfContainers; $i++) {
+
+                        $containerAttributes = array_merge($containerAttributes, [
+                            'packaging_id' => $this->getPackagingBySize($packagings, ceil($containerInitial)),
+                            'container_num' => $i,
+                            'initial' => $containerInitial,
+                            'used' => $containerInitial - $containerRemaining,
+                            'remaining' => $containerRemaining
+                        ]);
+
+                        factory(ProductLotContainer::class)->create($containerAttributes);
+
+                        $containerRemaining = $productLot->remaining - $containerInitial;
+                        $containerInitial = $productLot->initial - $containerInitial;
+                    }
+                }
+            }
         });
+    }
+
+    /**
+     * @return array
+     */
+    private function generatePackagings() {
+        return [
+            [
+                'name' => '2mL Vial',
+                'gram_tare_start' => 2.0,
+                'gram_tare_end' => 2.8,
+                'up_to_sku_size' => 100
+            ],
+            [
+                'name' => '8mL Vial',
+                'gram_tare_start' => 8.8,
+                'gram_tare_end' => 10.2,
+                'up_to_sku_size' => 2000
+            ],
+            [
+                'name' => '15mL Jar',
+                'gram_tare_start' => 31.4,
+                'gram_tare_end' => 34.4,
+                'up_to_sku_size' => 5000
+            ],
+            [
+                'name' => '30mL Jar',
+                'gram_tare_start' => 48.9,
+                'gram_tare_end' => 51.0,
+                'up_to_sku_size' => 10000
+            ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function generateStorageLocations() {
+        return [
+            ['name' => 'Freezer 1'],
+            ['name' => 'Freezer 2']
+        ];
     }
 
     /**
@@ -103,11 +185,27 @@ class DatabaseSeeder extends Seeder
     }
 
     /**
+     * @param int $productId
+     * @return Collection
+     */
+    private function getProductLots($productId) {
+        return DB::table('product_lots')->where('product_id', $productId)->get();
+    }
+
+    /**
+     * @return int
+     */
+    private function getRandomStorageLocationId() {
+        $storageLocation = DB::table('storage_locations')->inRandomOrder()->first();
+        return $storageLocation->id;
+    }
+
+    /**
      * @param Collection $packagings
      * @param int $size
      * @return int
      */
-    private function getSkuPackaging($packagings, $size) {
+    private function getPackagingBySize($packagings, $size) {
         $packagingId = 1;
         foreach ($packagings as $packaging) {
             if ($size <= $packaging->up_to_sku_size) {
@@ -121,7 +219,7 @@ class DatabaseSeeder extends Seeder
     /**
      * @return float
      */
-    private function getRandomBaseSkuPrice() {
+    private function randomBaseSkuPrice() {
         return round( (rand(6,10) / 10) * 100,2);
     }
 
@@ -132,7 +230,7 @@ class DatabaseSeeder extends Seeder
      * @param int $key
      * @return float
      */
-    private function getRandomSkuPrice($basePrice, $baseSize, $size, $key) {
+    private function generateSkuPrice($basePrice, $baseSize, $size, $key) {
         return $basePrice * ((10 - $key) / 10) * ($size / $baseSize) + rand(0,9);
     }
 }

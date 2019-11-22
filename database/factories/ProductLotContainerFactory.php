@@ -8,6 +8,6 @@ use App\ProductLotContainer;
 
 $factory->define(ProductLotContainer::class, function (Faker $faker) {
     return [
-        //
+        'spilled' => 0.0
     ];
 });
