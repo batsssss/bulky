@@ -20,8 +20,8 @@ class CreateProductLotContainersTable extends Migration
             $table->unsignedBigInteger('packaging_id');
             $table->unsignedInteger('container_num');
             $table->decimal('initial', 9, 1);
-            $table->decimal('used', 9, 1);
-            $table->decimal('spilled', 9, 1);
+            $table->decimal('used', 9, 1)->nullable();
+            $table->decimal('spilled', 9, 1)->nullable();
             $table->decimal('remaining', 9, 1);
             $table->timestamps();
         });

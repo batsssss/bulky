@@ -16,14 +16,14 @@ class CreateProductPacksTable extends Migration
         Schema::create('product_packs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('product_lot_id');
-            $table->unsignedBigInteger('product_sku_id');
+            $table->unsignedBigInteger('product_sku_id')->nullable();
             $table->unsignedBigInteger('packaging_id');
-            $table->unsignedBigInteger('storage_location_id');
-            $table->unsignedBigInteger('order_item_id');
+            $table->unsignedBigInteger('storage_location_id')->nullable();
+            $table->unsignedBigInteger('order_item_id')->nullable();
             $table->unsignedInteger('size');
             $table->decimal('tare', 9, 1);
             $table->decimal('net', 9, 1);
-            $table->boolean('is_ready');
+            $table->boolean('is_ready')->default(false);
             $table->timestamps();
         });
     }

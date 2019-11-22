@@ -19,11 +19,11 @@ class CreateProductLotsTable extends Migration
             $table->string('lot_number', 15);
             $table->decimal('initial', 9, 1);
             $table->decimal('remaining', 9, 1);
-            $table->decimal('held', 9, 1);
+            $table->decimal('reserved', 9, 1)->nullable();
             $table->decimal('available', 9, 1);
             $table->date('date_released');
-            $table->date('date_certified');
-            $table->date('date_expires');
+            $table->date('date_certified')->nullable();
+            $table->date('date_expires')->nullable();
             $table->timestamps();
         });
     }

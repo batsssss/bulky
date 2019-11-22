@@ -18,13 +18,13 @@ class CreateWeighingSessionsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('product_lot_container_id');
             $table->dateTime('start_datetime');
-            $table->dateTime('end_datetime');
-            $table->decimal('gross_before', 9, 1);
-            $table->decimal('gross_after', 9, 1);
-            $table->decimal('removed', 9, 1);
-            $table->decimal('spilled', 9, 1);
-            $table->string('notes', 127);
-            $table->unsignedInteger('rating');
+            $table->dateTime('end_datetime')->nullable();
+            $table->decimal('gross_before', 9, 1)->nullable();
+            $table->decimal('gross_after', 9, 1)->nullable();
+            $table->decimal('removed', 9, 1)->nullable();
+            $table->decimal('spilled', 9, 1)->nullable();
+            $table->string('notes', 127)->nullable();
+            $table->unsignedInteger('rating')->nullable();
             $table->timestamps();
         });
     }
