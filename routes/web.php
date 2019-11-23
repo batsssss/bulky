@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Uncomment to view all product and order data instead of using React
+//Route::get('/products', 'ProductController@index');
 
-Route::get('/products', 'ProductController@index');
+// Uncomment to load React components
+Route::view('/{path?}', 'app');

@@ -13,7 +13,9 @@ class ProductController extends Controller
 {
     public function index() {
 
-        $products = Product::with('productLots', 'productSkus')->orderBy('catalogue_num')->get();
+        $products = Product::with('productLots', 'productSkus')
+            ->orderBy('catalogue_num')
+            ->get();
 
         $orders = Order::with(['orderItems' => function($query) {
             $query->with('productLot');

@@ -13,4 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/products', 'ProductController@index');
+Route::get('/order-picker', 'WeighingController@orderPicker');
