@@ -55457,7 +55457,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _layout_Header__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./layout/Header */ "./resources/js/components/layout/Header.js");
-/* harmony import */ var _weighing_OrderPicker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./weighing/OrderPicker */ "./resources/js/components/weighing/OrderPicker.js");
+/* harmony import */ var _order_picker_OrderPicker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./order-picker/OrderPicker */ "./resources/js/components/order-picker/OrderPicker.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -55499,10 +55499,10 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: 'jss1'
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_layout_Header__WEBPACK_IMPORTED_MODULE_3__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: 'MuiContainer-root jss590 MuiContainer-maxWidthLg'
+        className: 'MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3'
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/order-picker",
-        component: _weighing_OrderPicker__WEBPACK_IMPORTED_MODULE_4__["default"]
+        component: _order_picker_OrderPicker__WEBPACK_IMPORTED_MODULE_4__["default"]
       }))));
     }
   }]);
@@ -55591,10 +55591,41 @@ var NavLink = function NavLink(props) {
 
 /***/ }),
 
-/***/ "./resources/js/components/weighing/LotTr.js":
-/*!***************************************************!*\
-  !*** ./resources/js/components/weighing/LotTr.js ***!
-  \***************************************************/
+/***/ "./resources/js/components/layout/PageHeader.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/layout/PageHeader.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var PageHeader = function PageHeader(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "MuiPaper-root MuiPaper-elevation1 jss962 MuiPaper-rounded"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "MuiBox-root jss964 jss189"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+    className: "MuiTypography-root jss190 MuiTypography-h5 MuiTypography-alignLeft"
+  }, props.h1)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", {
+    className: "MuiDivider-root jss192"
+  })));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (PageHeader);
+
+/***/ }),
+
+/***/ "./resources/js/components/order-picker/LotTr.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/order-picker/LotTr.js ***!
+  \*******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -55638,8 +55669,11 @@ function (_Component) {
     value: function render() {
       var lot = this.props.lot;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-        key: lot.id + 'lot'
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, lot.product.catalogue_num), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, lot.product.product_name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, lot.lot_number), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null));
+        key: lot.id + 'lot',
+        className: 'MuiTableRow-root'
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: 'MuiTableCell-root MuiTableCell-body ' + 'MuiTableCell-alignRight MuiTableCell-sizeSmall dashCell'
+      }, "-"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, lot.product.catalogue_num), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, lot.product.product_name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, lot.lot_number), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null));
     }
   }]);
 
@@ -55650,10 +55684,10 @@ function (_Component) {
 
 /***/ }),
 
-/***/ "./resources/js/components/weighing/OrderItemHeader.js":
-/*!*************************************************************!*\
-  !*** ./resources/js/components/weighing/OrderItemHeader.js ***!
-  \*************************************************************/
+/***/ "./resources/js/components/order-picker/OrderItemHeader.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/order-picker/OrderItemHeader.js ***!
+  \*****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -55706,10 +55740,10 @@ function (_Component) {
 
 /***/ }),
 
-/***/ "./resources/js/components/weighing/OrderItems.js":
-/*!********************************************************!*\
-  !*** ./resources/js/components/weighing/OrderItems.js ***!
-  \********************************************************/
+/***/ "./resources/js/components/order-picker/OrderItems.js":
+/*!************************************************************!*\
+  !*** ./resources/js/components/order-picker/OrderItems.js ***!
+  \************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -55767,10 +55801,10 @@ function (_Component) {
 
 /***/ }),
 
-/***/ "./resources/js/components/weighing/OrderPicker.js":
-/*!*********************************************************!*\
-  !*** ./resources/js/components/weighing/OrderPicker.js ***!
-  \*********************************************************/
+/***/ "./resources/js/components/order-picker/OrderPicker.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/order-picker/OrderPicker.js ***!
+  \*************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -55780,9 +55814,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _LotTr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LotTr */ "./resources/js/components/weighing/LotTr.js");
-/* harmony import */ var _OrderItemHeader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./OrderItemHeader */ "./resources/js/components/weighing/OrderItemHeader.js");
-/* harmony import */ var _OrderItems__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./OrderItems */ "./resources/js/components/weighing/OrderItems.js");
+/* harmony import */ var _layout_PageHeader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../layout/PageHeader */ "./resources/js/components/layout/PageHeader.js");
+/* harmony import */ var _TableMainHeader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TableMainHeader */ "./resources/js/components/order-picker/TableMainHeader.js");
+/* harmony import */ var _LotTr__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./LotTr */ "./resources/js/components/order-picker/LotTr.js");
+/* harmony import */ var _OrderItemHeader__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./OrderItemHeader */ "./resources/js/components/order-picker/OrderItemHeader.js");
+/* harmony import */ var _OrderItems__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./OrderItems */ "./resources/js/components/order-picker/OrderItems.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -55800,6 +55836,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
 
 
 
@@ -55839,15 +55877,55 @@ function (_Component) {
     key: "render",
     value: function render() {
       var lotsToWeigh = this.state.lotsToWeigh;
-      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Catalogue"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Description"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Lot Number"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Containers"))), lotsToWeigh.map(function (lot, key) {
+      var tableHeaders = [{
+        name: '',
+        align: 'Right'
+      }, {
+        name: 'Catalogue',
+        align: 'Left'
+      }, {
+        name: 'Description',
+        align: 'Left'
+      }, {
+        name: 'Containers',
+        align: 'Left'
+      }, {
+        name: 'Weigh',
+        align: 'Right'
+      }];
+      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: 'MuiContainer-root jss590 MuiContainer-maxWidthLg'
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_layout_PageHeader__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        h1: 'Order Picker'
+      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: 'MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12'
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: 'MuiPaper-root MuiPaper-elevation1 jss962 MuiPaper-rounded'
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: 'MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2'
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: 'MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12'
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("table", {
+        className: 'MuiTable-root parentTable jss963'
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("thead", {
+        className: 'MuiTableHead-root'
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", {
+        className: 'MuiTableRow-root MuiTableRow-head'
+      }, tableHeaders.map(function (th, key) {
+        return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_TableMainHeader__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          key: key,
+          settings: th
+        });
+      }))), lotsToWeigh.map(function (lot, key) {
         return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tbody", {
-          key: key
-        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_LotTr__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          key: key,
+          className: 'MuiTableBody-root'
+        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_LotTr__WEBPACK_IMPORTED_MODULE_4__["default"], {
           lot: lot
-        }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_OrderItemHeader__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_OrderItems__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_OrderItemHeader__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_OrderItems__WEBPACK_IMPORTED_MODULE_6__["default"], {
           items: lot.order_items
         }));
-      }));
+      })))))));
     }
   }]);
 
@@ -55855,6 +55933,30 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_1__["Component"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (OrderPicker);
+
+/***/ }),
+
+/***/ "./resources/js/components/order-picker/TableMainHeader.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/order-picker/TableMainHeader.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var TableMainHeader = function TableMainHeader(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+    className: 'MuiTableCell-root MuiTableCell-head ' + 'MuiTableCell-align' + props.settings.align + ' MuiTableCell-sizeSmall',
+    scope: 'col'
+  }, props.settings.name);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (TableMainHeader);
 
 /***/ }),
 

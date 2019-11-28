@@ -8,7 +8,11 @@ class LotTr extends Component {
     render() {
         const {lot} = this.props;
         return (
-            <tr key={lot.id + 'lot'}>
+            <tr key={lot.id + 'lot'} className={'MuiTableRow-root'}>
+                <td className={'MuiTableCell-root MuiTableCell-body ' +
+                'MuiTableCell-alignRight MuiTableCell-sizeSmall dashCell'}>
+                    -
+                </td>
                 <td>
                     {lot.product.catalogue_num}
                 </td>

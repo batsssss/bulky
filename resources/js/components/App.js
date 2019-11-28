@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Header from './layout/Header';
-import OrderPicker from './weighing/OrderPicker';
+import OrderPicker from './order-picker/OrderPicker';
 
 class App extends Component {
     render() {
@@ -12,7 +12,7 @@ class App extends Component {
                 <div className={'jss1'}>
                     <Header/>
                 </div>
-                <div className={'MuiContainer-root jss590 MuiContainer-maxWidthLg'}>
+                <div className={'MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3'}>
                     <Switch>
                         <Route path='/order-picker' component={OrderPicker} />
                     </Switch>
