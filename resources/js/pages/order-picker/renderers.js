@@ -3,11 +3,11 @@ import AppButton from '../../components/app-button';
 import SubTable from './sub-table/index';
 
 const subRows = {
-  1: [
+  3: [
     createSubData(1, 5324, 'November 1st, 2019', '50g', '', '2940823', 'Completed'),
     createSubData(2, 5399, 'November 2nd, 2019', '25g', '', '2940823', 'Not Completed'),
   ],
-  2: [
+  5: [
     createSubData(1, 5324, 'November 1st, 2019', '50g', '', '2940825', 'Completed'),
     createSubData(2, 5399, 'November 2nd, 2019', '50g', '', '', 'Not Completed'),
     createSubData(3, 5400, 'November 3rd, 2019', '50g', '', '', 'Not Completed'),
