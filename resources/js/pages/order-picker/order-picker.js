@@ -22,7 +22,7 @@ function OrderPicker() {
     axios.get('/api/order-picker').then(response => {
       setLotsToWeigh(response.data);
     });
-  });
+  }, []);
 
   return (
     <Container className={classes.rootContainer}>
