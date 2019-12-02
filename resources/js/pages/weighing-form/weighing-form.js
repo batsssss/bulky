@@ -35,20 +35,28 @@ function WeighingForm() {
       setSession(response.data.session);
       setPackagings(response.data.packagings);
     });
-  });
+  }, []);
+
+  if (container.length === 0
+      || session.length === 0
+      || packagings.length === 0) {
+    return <div />
+  }
 
   return (
     <Container className={classes.rootContainer}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <PageTitle title={"Weighing Session: " + container.id} />
+            <PageTitle title={"Weighing Session: " + session.id} />
           </Paper>
         </Grid>
 
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <TextFieldsTop />
+            <TextFieldsTop
+                session={session}
+                container={container} />
             <ListItems />
             <TextFieldsBottom />
           </Paper>
