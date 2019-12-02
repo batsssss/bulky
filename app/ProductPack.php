@@ -63,7 +63,9 @@ class ProductPack extends Model
             'product_sku_id' => $orderItem['product_sku_id'],
             'packaging_id' => $orderItem['product_sku']['packaging_id'],
             'order_item_id' => $orderItem['id'],
-            'size' => $orderItem['size']
+            'size' => $orderItem['size'],
+            'is_ready' => false,
+            'packaging' => $orderItem['product_sku']['packaging']
         ];
     }
 }
