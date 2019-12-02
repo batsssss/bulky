@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
+  Redirect
 } from 'react-router-dom';
 import AppBar from './components/app-bar';
 import OrderPicker from './pages/order-picker';
@@ -21,7 +21,7 @@ function App() {
         <Route path="/order-picker">
           <OrderPicker />
         </Route>
-        <Route path="/weighing-form">
+        <Route path="/weighing-form/:containerId">
           <WeighingForm />
         </Route>
         <Route path="/price-availability">
