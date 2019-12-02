@@ -17,4 +17,6 @@ Route::get('/jsonpicker', 'WeighingController@orderPicker');
 Route::get('/jsonform/{containerId}', 'WeighingController@weighingForm');
 
 // Uncomment to load React components
-Route::view('/{path?}', 'app');
+Route::get('/{path?}', function () {
+    return view('app');
+})->where('path', '.*');
