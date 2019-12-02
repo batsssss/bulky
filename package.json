@@ -25,7 +25,10 @@
         "@material-ui/core": "^4.7.0",
         "@material-ui/icons": "^4.5.1",
         "clsx": "^1.0.4",
+        "moment": "^2.24.0",
+        "moment-timezone": "^0.5.27",
         "react-hot-loader": "^4.12.18",
+        "react-moment": "^0.9.6",
         "react-router-dom": "^5.1.2"
     }
 }
