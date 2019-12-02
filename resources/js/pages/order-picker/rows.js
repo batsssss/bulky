@@ -12,14 +12,14 @@ export function makeRows(lots) {
   lots.forEach(function(lot) {
     rows.push(createData(
         lot.id,
-        lot.lot_number,
+        '',
         lot.product.catalogue_num + ' ' + lot.product.product_name,
         'lot-id: ' + lot.id,
-        '500g',
+        lot.remaining + 'mg',
         '75g',
         '2',
-        '5',
-        'Weigh'
+        lot.lot_number,
+        lot.product_lot_containers[0].id
     ));
     rows.push(createData(
         lot.id + '.sub',

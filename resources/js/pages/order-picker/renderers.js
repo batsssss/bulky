@@ -56,6 +56,7 @@ const renderers = {
         variant="contained"
         color="primary"
         size="small"
+        href={'/weighing-form/' + row.weigh}
       >
         Start
       </AppButton>
