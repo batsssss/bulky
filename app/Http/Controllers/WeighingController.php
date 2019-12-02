@@ -43,14 +43,16 @@ class WeighingController extends Controller
 
         $data['container'] = $container;
 
-        $weighingSession = (new WeighingSession)->buildObject($containerId);
+        if (empty($container['weighing_sessions'])) {
+            $weighingSession = (new WeighingSession)->buildObject($containerId);;
+            $container['weighing_sessions'][] = $weighingSession->toArray();
+        }
 
         /** @var Collection $packagings */
         $packagings = Packaging::pluck('name', 'id');
 
         return json_encode([
             'container' => $container,
-            'session' => $weighingSession->toArray(),
             'packagings' => $packagings->toArray()
         ]);
     }

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use DateTime;
 use Exception;
 
@@ -22,6 +23,13 @@ class WeighingSession extends Model
      */
     public function weighingRecords() {
         return $this->hasMany(WeighingRecord::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function productLotContainer() {
+        return $this->belongsTo(ProductLotContainer::class);
     }
 
     /** UTILITIES */

@@ -11,8 +11,8 @@ class ProductLotContainer extends Model
     /**
      * @return HasMany
      */
-    public function weighingRecords() {
-        return $this->hasMany(WeighingRecord::class);
+    public function weighingSessions() {
+        return $this->hasMany(WeighingSession::class);
     }
 
     /**
@@ -62,6 +62,9 @@ class ProductLotContainer extends Model
                         ]);
                     }
                 ]);
+            },
+            'weighingSessions' => function($query) {
+                $query->whereNull('end_datetime');
             }
         ])->where('id', '=', $id)
             ->whereHas('productLot', function($query) {
