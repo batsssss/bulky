@@ -47,6 +47,8 @@ class ProductLotContainer extends Model
     public function getForWeighingForm($id) {
 
         return $this->with([
+            'storageLocation',
+            'packaging',
             'productLot' => function($query) {
                 $query->with([
                     'product',
@@ -60,9 +62,7 @@ class ProductLotContainer extends Model
                         ]);
                     }
                 ]);
-            },
-            'storageLocation',
-            'packaging'
+            }
         ])->where('id', '=', $id)
             ->whereHas('productLot', function($query) {
                 $query->where('reserved', '>', 0);
