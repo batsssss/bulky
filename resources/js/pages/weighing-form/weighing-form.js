@@ -9,6 +9,7 @@ import PageTitle from '../../components/page-title';
 import TextFieldsTop from './textfields-top';
 import ListItems from './list-items';
 import TextFieldsBottom from './textfields-bottom';
+import OrderItem from './order-item';
 import useStyles from './use-styles';
 import axios from "axios";
 
@@ -32,7 +33,7 @@ function WeighingForm() {
   useEffect(() => {
     axios.get(`/api/weighing-form/${containerId}`).then(response => {
       setContainer(response.data.container);
-      setSession(response.data.session);
+      setSession(response.data.container.weighing_sessions[0]);
       setPackagings(response.data.packagings);
     });
   }, []);
@@ -55,8 +56,13 @@ function WeighingForm() {
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <TextFieldsTop
-                session={session}
-                container={container} />
+                container={container}
+                session={session} />
+            {container.product_lot.order_items.map((orderItem) =>
+                <OrderItem key={"orderItem" + orderItem.id}
+                           orderItem={orderItem}>
+                </OrderItem>
+            )}
             <ListItems />
             <TextFieldsBottom />
           </Paper>
