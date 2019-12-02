@@ -11,8 +11,7 @@
 |
 */
 
-// Uncomment to view all product and order data instead of using React
-//Route::get('/products', 'ProductController@index');
+Route::get('/products', 'ProductController@index');
 Route::get('/jsonpicker', 'WeighingController@orderPicker');
 Route::get('/jsonform/{containerId}', 'WeighingController@weighingForm');
 
