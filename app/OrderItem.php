@@ -35,4 +35,27 @@ class OrderItem extends Model
     public function productSku() {
         return $this->belongsTo(ProductSku::class);
     }
+
+    /** UTILITIES */
+
+    /**
+     * If an order item has fewer saved packs than its quantity,
+     * add the remaining number of packs using default data from the order item.
+     * @param array $orderItems
+     * @return array
+     */
+    public function addMissingPacks($orderItems) {
+        $productPack = new ProductPack();
+
+        foreach ($orderItems as $key => $orderItem) {
+            $packCount = count($orderItem['product_packs']);
+
+            for ($i = $packCount; $i <= $orderItem['quantity'] - 1; $i++) {
+                $orderItems[$key]['product_packs'][$i]
+                    = $productPack->buildFromOrderItem($orderItem);
+            }
+        }
+
+        return $orderItems;
+    }
 }

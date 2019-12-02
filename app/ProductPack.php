@@ -49,4 +49,21 @@ class ProductPack extends Model
     public function orderItem() {
         return $this->belongsTo(OrderItem::class);
     }
+
+    /** UTILITIES */
+
+    /**
+     * Builds an array of Packaging data from the given Order Item data.
+     * @param array $orderItem
+     * @return array
+     */
+    public function buildFromOrderItem($orderItem) {
+        return [
+            'product_lot_id' => $orderItem['product_lot_id'],
+            'product_sku_id' => $orderItem['product_sku_id'],
+            'packaging_id' => $orderItem['product_sku']['packaging_id'],
+            'order_item_id' => $orderItem['id'],
+            'size' => $orderItem['size']
+        ];
+    }
 }

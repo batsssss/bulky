@@ -35,4 +35,37 @@ class ProductLotContainer extends Model
     public function storageLocation() {
         return $this->belongsTo(StorageLocation::class);
     }
+
+    /** FINDERS */
+
+    /**
+     * Retrieves container data with associated models
+     * necessary for launching a weighing form.
+     * @param int $id
+     * @return ProductLotContainer|null
+     */
+    public function getForWeighingForm($id) {
+
+        return $this->with([
+            'productLot' => function($query) {
+                $query->with([
+                    'product',
+                    'orderItems' => function($query) {
+                        $query->with([
+                            'order',
+                            'productPacks' => function($query) {
+                                $query->with('weighingRecord');
+                            },
+                            'productSku'
+                        ]);
+                    }
+                ]);
+            },
+            'storageLocation',
+            'packaging'
+        ])->where('id', '=', $id)
+            ->whereHas('productLot', function($query) {
+                $query->where('reserved', '>', 0);
+            })->first();
+    }
 }
