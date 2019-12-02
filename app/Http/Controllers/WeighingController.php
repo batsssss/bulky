@@ -11,6 +11,7 @@ use App\ProductLotContainer;
 use App\OrderItem;
 use App\Packaging;
 use App\WeighingSession;
+use Illuminate\Support\Facades\Date;
 
 class WeighingController extends Controller
 {
@@ -42,11 +43,7 @@ class WeighingController extends Controller
 
         $data['container'] = $container;
 
-        $weighingSession = new WeighingSession();
-        $weighingSession->id = 1;
-        $weighingSession->product_lot_container_id = $containerId;
-        $weighingSession->user_id = 1;
-        $weighingSession->start_datetime = new DateTime();
+        $weighingSession = (new WeighingSession)->buildObject($containerId);
 
         /** @var Collection $packagings */
         $packagings = Packaging::pluck('name', 'id');
