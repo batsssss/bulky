@@ -55,15 +55,16 @@ function WeighingForm() {
 
         <Grid item xs={12}>
           <Paper className={classes.paper}>
+
             <TextFieldsTop
                 container={container}
                 session={session} />
+
             {container.product_lot.order_items.map((orderItem) =>
                 <OrderItem key={"orderItem" + orderItem.id}
                            orderItem={orderItem}>
                 </OrderItem>
             )}
-            <ListItems />
             <TextFieldsBottom />
           </Paper>
         </Grid>
