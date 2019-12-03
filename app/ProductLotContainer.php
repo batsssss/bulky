@@ -56,7 +56,10 @@ class ProductLotContainer extends Model
                         $query->with([
                             'order',
                             'productPacks' => function($query) {
-                                $query->with('weighingRecords');
+                                $query->with([
+                                    'weighingRecords',
+                                    'packaging'
+                                ]);
                             },
                             'productSku' => function($query) {
                                 $query->with('packaging');
