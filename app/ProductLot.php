@@ -67,4 +67,23 @@ class ProductLot extends Model
         ])->where('reserved', '>', 0)
             ->get();
     }
+
+    public function getToOrder() {
+
+        return DB::table('order_items')->get();
+        
+    }
+
+    public function getProductLotData() {
+
+        return DB::table('product_lots')->get();
+        
+    }
+
+    public function getProductLotContainer() {
+
+        return DB::table('product_lot_containers')->get();
+        
+    }
+    
 }

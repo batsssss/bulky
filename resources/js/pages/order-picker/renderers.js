@@ -1,54 +1,59 @@
 import React from 'react';
 import AppButton from '../../components/app-button';
 import SubTable from './sub-table/index';
-
-const subRows = {
-  3: [
-    createSubData(1, 5324, 'November 1st, 2019', '50g', '', '2940823', 'Completed'),
-    createSubData(2, 5399, 'November 2nd, 2019', '25g', '', '2940823', 'Not Completed'),
-  ],
-  5: [
-    createSubData(1, 5324, 'November 1st, 2019', '50g', '', '2940825', 'Completed'),
-    createSubData(2, 5399, 'November 2nd, 2019', '50g', '', '', 'Not Completed'),
-    createSubData(3, 5400, 'November 3rd, 2019', '50g', '', '', 'Not Completed'),
-  ],
-};
-
-function createSubData(
-  id, number, scheduledDate, orderedWeight, actualWeight, tracking, status,
-) {
-  return {
-    id, number, scheduledDate, orderedWeight, actualWeight, tracking, status,
-  };
-}
+import { isSubTable } from './utils';
 
 const renderers = {
   id(row) {
-    if (`${row.id}`.includes('sub')) {
+    if ((isSubTable(row))) {
       return null;
     }
     return '-';
   },
-  number(row, header) {
-    if (`${row.id}`.includes('sub')) {
+  number(row) {
+    if ((isSubTable(row))) {
       return null;
     }
-    return row[header.id];
+    return '';
   },
-  description(row, header) {
-    if (`${row.id}`.includes('sub')) {
-      return <SubTable rows={subRows[row.number]} />;
+  description(row) {
+    if ((isSubTable(row))) {
+      return <SubTable rows={row.subTable} />;
     }
-    return row[header.id];
+    return row.catalogue_num+ ' ' +row.product_name || '';
   },
-  location(row, header) {
-    if (`${row.id}`.includes('sub')) {
+  location(row) {
+    if ((isSubTable(row))) {
       return null;
     }
-    return row[header.id];
+    return row.product_lot_id || '';
+  },
+  currentWeight(row) {
+    if ((isSubTable(row))) {
+      return null;
+    }
+    return row.productLot.remaining || '';
+  },
+  totalWeight(row) {
+    if ((isSubTable(row))) {
+      return null;
+    }
+    return '75g';
+  },
+  orders(row) {
+    if ((isSubTable(row))) {
+      return null;
+    }
+    return '2';
+  },
+  batch(row) {
+    if ((isSubTable(row))) {
+      return null;
+    }
+    return row.productLot.lot_number || '';
   },
   weigh(row) {
-    if (`${row.id}`.includes('sub')) {
+    if ((isSubTable(row))) {
       return null;
     }
     return (
@@ -56,7 +61,7 @@ const renderers = {
         variant="contained"
         color="primary"
         size="small"
-        href={'/weighing-form/' + row.weigh}
+        href={'/weighing-form/' + row.product.id}
       >
         Start
       </AppButton>

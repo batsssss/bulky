@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, {useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import cn from 'clsx';
 import {
   Paper,
@@ -10,19 +9,21 @@ import PageTitle from '../../components/page-title';
 import AppTable from '../../components/app-table';
 import useStyles from './use-styles';
 import headers from './headers';
-
-import {makeRows} from './rows';
+import { groupRowsByKey } from './utils';
+import { getOrderItems, getProductLots, getProducts } from './api';
 
 function OrderPicker() {
   const classes = useStyles();
-
-  const [lotsToWeigh, setLotsToWeigh] = React.useState([]);
+  const groupByKey = 'product_lot_id';
+  const [orderItems, setOrderItems] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/order-picker').then(response => {
-      setLotsToWeigh(response.data);
-    });
+    getAllData(setOrderItems);
   }, []);
+
+  const groupedRows = groupRowsByKey(orderItems, groupByKey);
+  const filteredRows = removeRowsWithoutProdLotId(groupedRows);
+  console.log('TCL: OrderPicker -> groupedRows', groupedRows);
 
   return (
     <Container className={classes.rootContainer}>
@@ -39,7 +40,7 @@ function OrderPicker() {
               <Grid item xs={12}>
                 <AppTable
                   size="small"
-                  rows={makeRows(lotsToWeigh)}
+                  rows={filteredRows}
                   headers={headers}
                   className={cn('parentTable', classes.table)}
                 />
@@ -53,6 +54,34 @@ function OrderPicker() {
       </Grid>
     </Container>
   );
+}
+
+function removeRowsWithoutProdLotId(rows) {
+  return rows.filter(({ product_lot_id }) => product_lot_id);
+}
+
+function getAllData(callback) {
+  const parallelRequest = [getOrderItems(), getProductLots(), getProducts()];
+
+  Promise
+    .all(parallelRequest)
+    .then(([orderItemsResponse, productLotsResponse, productsResponse]) => {
+      const orderItemsWithProductLot = orderItemsResponse.map((eachItem) => {
+        const productLot = productLotsResponse
+          .find(({ id }) => id === eachItem.product_lot_id) || {};
+
+        return { ...eachItem, productLot };
+      });
+
+      const orderItemsWithProductLotAndProduct = orderItemsWithProductLot.map((eachItem) => {
+        const product = productsResponse
+          .find(({ product_lot_id }) => product_lot_id === eachItem.product_lot_id) || {};
+
+        return { ...eachItem, product };
+      });
+
+      callback(orderItemsWithProductLotAndProduct);
+    });
 }
 
 export default OrderPicker;

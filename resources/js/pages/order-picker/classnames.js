@@ -1,44 +1,44 @@
-const isSub = ({ id }) => `${id}`.includes('sub');
+import { isSubTable } from './utils';
 
 const classNames = {
   description(row) {
-    if (isSub(row)) {
+    if (isSubTable(row)) {
       return 'subTableCell';
     }
     return '';
   },
   location(row) {
-    if (isSub(row)) {
+    if (isSubTable(row)) {
       return 'hiddenCell';
     }
     return '';
   },
   currentWeight(row) {
-    if (isSub(row)) {
+    if (isSubTable(row)) {
       return 'hiddenCell';
     }
     return '';
   },
   totalWeight(row) {
-    if (isSub(row)) {
+    if (isSubTable(row)) {
       return 'hiddenCell';
     }
     return '';
   },
   orders(row) {
-    if (isSub(row)) {
+    if (isSubTable(row)) {
       return 'hiddenCell';
     }
     return '';
   },
   batch(row) {
-    if (isSub(row)) {
+    if (isSubTable(row)) {
       return 'hiddenCell';
     }
     return '';
   },
   weigh(row) {
-    if (isSub(row)) {
+    if (isSubTable(row)) {
       return 'hiddenCell';
     }
     return '';

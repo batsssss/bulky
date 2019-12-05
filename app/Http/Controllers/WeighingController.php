@@ -21,6 +21,24 @@ class WeighingController extends Controller
         return $lotsToWeigh->toJson();
     }
 
+    public function orderItem() {
+
+        $orderData = (new ProductLot)->getToOrder();
+        return $orderData->toJson();
+    }
+
+    public function productLot() {
+
+        $orderData = (new ProductLot)->getProductLotData();
+        return $orderData->toJson();
+    }
+
+    public function productLotContainer() {
+
+        $orderData = (new ProductLot)->getProductLotContainer();
+        return $orderData->toJson();
+    }
+
     public function weighingForm($containerId) {
 
         if (! ProductLotContainer::where('id', $containerId)->exists()) {
