@@ -6,6 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * Class ProductPack
+ * @package App
+ * @property $id
+ * @property $order_item_id
+ * @property $product_sku_id
+ * @property $product_lot_id
+ * @property $packaging_id
+ * @property $size
+ * @property $tare
+ * @property $net
+ * @property $is_ready
+ */
 class ProductPack extends Model
 {
     /**
@@ -64,8 +77,7 @@ class ProductPack extends Model
             'packaging_id' => $orderItem['product_sku']['packaging_id'],
             'order_item_id' => $orderItem['id'],
             'size' => $orderItem['size'],
-            'is_ready' => false,
-            'packaging' => $orderItem['product_sku']['packaging']
+            'is_ready' => false
         ];
     }
 }
