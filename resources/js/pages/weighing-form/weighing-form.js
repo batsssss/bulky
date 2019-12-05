@@ -1,17 +1,16 @@
 import React, {useEffect} from 'react';
 import { useParams } from 'react-router-dom';
+import axios from "axios";
 import {
   Paper,
   Grid,
-  Container,
+  Container, CircularProgress,
 } from '@material-ui/core';
 import PageTitle from '../../components/page-title';
 import TextFieldsTop from './textfields-top';
-import ListItems from './list-items';
 import TextFieldsBottom from './textfields-bottom';
 import OrderItem from './order-item';
 import useStyles from './use-styles';
-import axios from "axios";
 
 function WeighingForm() {
   const classes = useStyles();
@@ -41,7 +40,9 @@ function WeighingForm() {
   if (container.length === 0
       || session.length === 0
       || packagings.length === 0) {
-    return <div />
+    return <Container className={classes.rootContainer}>
+      <CircularProgress />
+    </Container>
   }
 
   return (
@@ -62,8 +63,9 @@ function WeighingForm() {
 
             {container.product_lot.order_items.map((orderItem) =>
                 <OrderItem key={"orderItem" + orderItem.id}
-                           orderItem={orderItem}>
-                </OrderItem>
+                           orderItem={orderItem}
+                           packagings={packagings}
+                />
             )}
             <TextFieldsBottom />
           </Paper>

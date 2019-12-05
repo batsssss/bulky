@@ -14,4 +14,6 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/order-picker', 'WeighingController@orderPicker');
+
 Route::get('/weighing-form/{containerId}', 'WeighingController@weighingForm');
+Route::post('/start-weighing', 'WeighingRecordController@store');
