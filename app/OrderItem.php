@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\DB;
 
 class OrderItem extends Model
 {
@@ -58,4 +59,5 @@ class OrderItem extends Model
 
         return $orderItems;
     }
+
 }

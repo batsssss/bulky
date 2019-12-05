@@ -1,5 +1,6 @@
 import renderers from './renderers';
 import classNames from './classnames';
+import { isSubTable } from './utils';
 
 const headers = [
   {
@@ -19,7 +20,7 @@ const headers = [
     name: 'DESCRIPTION',
     align: 'left',
     render: renderers.description,
-    colSpan: (row) => (`${row.id}`.includes('sub') ? 7 : 1),
+    colSpan: (row) => (isSubTable(row) ? 7 : 1),
     className: classNames.description,
   },
   {
