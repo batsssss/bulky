@@ -62,7 +62,8 @@ class WeighingController extends Controller
         $data['container'] = $container;
 
         if (empty($container['weighing_sessions'])) {
-            $weighingSession = (new WeighingSession)->buildObject($containerId);;
+            $weighingSession = (new WeighingSession)->buildObject($containerId);
+            $weighingSession->save();
             $container['weighing_sessions'][] = $weighingSession->toArray();
         }
 

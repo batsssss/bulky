@@ -43,8 +43,9 @@ class WeighingSession extends Model
     public function buildObject($containerId) {
         $weighingSession = new WeighingSession();
 
-        $weighingSession->id = 1;
         $weighingSession->product_lot_container_id = $containerId;
+
+        /** @Todo Use logged-in user id */
         $weighingSession->user_id = 1;
 
         try {
@@ -53,7 +54,7 @@ class WeighingSession extends Model
             $now = null;
         }
 
-        $weighingSession->start_datetime = $now->format('c');
+        $weighingSession->start_datetime = $now;
 
         return $weighingSession;
     }
