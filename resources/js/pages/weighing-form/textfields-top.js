@@ -1,5 +1,4 @@
 import React from 'react';
-import cn from 'clsx';
 import {
   Grid,
   TextField,
@@ -13,6 +12,7 @@ function TextFieldsTop({container, session}) {
   const classes = useStyles();
 
   return (
+      <React.Fragment>
       <Paper className={classes.paper}>
     <Grid container spacing={6}>
         <Grid item xs={12} className={classes.gridItem}>
@@ -44,6 +44,9 @@ function TextFieldsTop({container, session}) {
             </Typography>
         </Grid>
       </Grid>
+      </Paper>
+
+        <Paper className={classes.paper}>
       <Grid container spacing={3} justify="flex-start" >
         <Grid item className={classes.gridItem}>
           <Typography component="div" align="left">
@@ -66,7 +69,8 @@ function TextFieldsTop({container, session}) {
             />
         </Grid>
     </Grid>
-      </Paper>
+        </Paper>
+      </React.Fragment>
   );
 }
 

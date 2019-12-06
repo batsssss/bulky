@@ -5,6 +5,7 @@ import {
   TextField,
   Typography,
   InputAdornment,
+    Paper
 } from '@material-ui/core';
 import AppButton from '../../components/app-button';
 import useStyles from './use-styles';
@@ -13,6 +14,7 @@ function TextFieldsBottom() {
   const classes = useStyles();
   return (
       <React.Fragment>
+        <Paper className={classes.paper}>
         <Grid container spacing={6}>
           <Grid item xs={3} className={classes.gridItem}>
             <Typography component="div" align="left">
@@ -80,7 +82,7 @@ function TextFieldsBottom() {
             <TextField
                 multiline
                 fullWidth
-                rows="2"
+                rows="1"
                 variant="filled"
                 margin="dense"
                 className={classes.textarea}
@@ -97,6 +99,7 @@ function TextFieldsBottom() {
             </AppButton>
           </Grid>
         </Grid>
+        </Paper>
       </React.Fragment>
   );
 }
