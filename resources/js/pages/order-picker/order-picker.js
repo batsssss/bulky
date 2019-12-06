@@ -23,7 +23,6 @@ function OrderPicker() {
 
   const groupedRows = groupRowsByKey(orderItems, groupByKey);
   const filteredRows = removeRowsWithoutProdLotId(groupedRows);
-  console.log('TCL: OrderPicker -> groupedRows', groupedRows);
 
   return (
     <Container className={classes.rootContainer}>
