@@ -9,12 +9,12 @@ import useStyles from './use-styles';
 function WeighingRecord(props) {
   const classes = useStyles();
 
-  const {packagings, suggestedPackagingId} = props;
+  const {weighingRecord, packagings, suggestedPackagingId} = props;
 
   return (
       <div>
         <Typography>
-          Weighing: 5g
+          Weighing: {weighingRecord.target}mg
         </Typography>
         <Grid container spacing={3}>
           <Grid item sm={12} md={6}>
@@ -25,8 +25,8 @@ function WeighingRecord(props) {
           <Grid item sm={12} md={6}>
             <NativeSelect
                 value={suggestedPackagingId}
-                name="weighing_record.0.packaging_id"
-                id="weighing_record_0_packaging_id"
+                name="weighing_record.packaging_id"
+                id="weighing_record_packaging_id"
                 variant="filled"
                 margin="dense"
                 className={cn(classes.textfield, classes.textfieldWhite)}
@@ -51,8 +51,8 @@ function WeighingRecord(props) {
           <Grid item sm={12} md={6}>
             <TextField
                 placeholder={"0.0000"}
-                name="weighing_record.0.tare"
-                id="weighing_record_0_tare"
+                name="weighing_record.tare"
+                id="weighing_record_tare"
                 variant="filled"
                 margin="dense"
                 className={cn(classes.textfield, classes.textfieldWhite)}
@@ -74,8 +74,8 @@ function WeighingRecord(props) {
           <Grid item sm={12} md={6}>
             <TextField
                 placeholder={"0.0000"}
-                name="weighing_record.0.net"
-                id="weighing_record_0_net"
+                name="weighing_record.net"
+                id="weighing_record_net"
                 variant="filled"
                 margin="dense"
                 className={cn(classes.textfield, classes.textfieldWhite)}
@@ -97,8 +97,8 @@ function WeighingRecord(props) {
           <Grid item sm={12} md={6}>
             <TextField
                 placeholder={"0.0000"}
-                name="weighing_record.0.gross"
-                id="weighing_record_0_gross"
+                name="weighing_record.gross"
+                id="weighing_record_gross"
                 variant="filled"
                 margin="dense"
                 className={cn(classes.textfield, classes.textfieldWhite)}
@@ -118,8 +118,8 @@ function WeighingRecord(props) {
           <Grid item sm={12} md={6}>
             <TextField
                 placeholder={"0.0000"}
-                name="weighing_record.0.notes"
-                id="weighing_record_0_notes"
+                name="weighing_record.notes"
+                id="weighing_record_notes"
                 variant="filled"
                 margin="dense"
                 className={cn(classes.textfield, classes.textfieldWhite)}

@@ -1,26 +1,14 @@
 import React, {useState} from 'react';
-import axios from "axios";
 import {
     ListItem,
     Typography,
-    Grid, Collapse
+    Grid
 } from "@material-ui/core";
 import AppButton from "../../components/app-button";
-import WeighingRecord from './weighing-record';
 
 function ProductPack(props) {
 
-    const {index, packagings} = props;
-    const [productPack, setProductPack] = useState(props.productPack);
-    const [isWeighing, setIsWeighing] = useState(false);
-
-    const handleStartWeighing = () => {
-        axios.post(`/api/start-weighing`, productPack).then(response => {
-            setProductPack(response.data.product_pack);
-        }).then(function() {
-            setIsWeighing(true);
-        });
-    };
+    const {productPack, index, packagings, handleStartWeighing} = props;
 
     let filledAmount, filledDate, actionButton = null;
     let status, packagingKeyword;
@@ -47,7 +35,7 @@ function ProductPack(props) {
         actionButton = <AppButton variant="contained"
                                   color="primary"
                                   size="small"
-                                  onClick={handleStartWeighing}
+                                  onClick={() => handleStartWeighing(productPack)}
         >
             Start
         </AppButton>;
@@ -94,12 +82,6 @@ function ProductPack(props) {
                 </Grid>
             </Grid>
         </ListItem>
-        <Collapse in={isWeighing}>
-            <WeighingRecord
-                packagings={packagings}
-                suggestedPackagingId={productPack.packaging_id}
-            />
-        </Collapse>
     </React.Fragment>
     )
 }

@@ -1,10 +1,9 @@
-
 import React from 'react';
 import ProductPack from './product-pack';
 import {List, ListSubheader, Typography} from "@material-ui/core";
 
 function OrderItem(props) {
-    const {orderItem, packagings} = props;
+    const {orderItem, packagings, handleStartWeighing} = props;
     return (
         <React.Fragment>
           <List subheader={
@@ -23,6 +22,7 @@ function OrderItem(props) {
                     productPack={productPack}
                     index={index}
                     packagings={packagings}
+                    handleStartWeighing={handleStartWeighing}
                 />
             )}
           </List>
