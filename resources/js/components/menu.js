@@ -29,28 +29,21 @@ function Menu() {
     <MenuList className={classes.menuList}>
       <MenuItem
         selected={isSelected('/order-picker')}
-        onClick={makeClickHandler('order-picker')}
+        onClick={makeClickHandler('/order-picker')}
       >
         Order Picker
       </MenuItem>
 
       <MenuItem
-        selected={isSelected('/weighing-form')}
-        onClick={makeClickHandler('weighing-form')}
-      >
-        Weighing Form
-      </MenuItem>
-
-      <MenuItem
         selected={isSelected('/price-availability')}
-        onClick={makeClickHandler('price-availability')}
+        onClick={makeClickHandler('/price-availability')}
       >
         Price Availability
       </MenuItem>
 
       <MenuItem
         selected={isSelected('/cart')}
-        onClick={makeClickHandler('cart')}
+        onClick={makeClickHandler('/cart')}
       >
         Cart
       </MenuItem>
