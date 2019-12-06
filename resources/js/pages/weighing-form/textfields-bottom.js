@@ -7,6 +7,7 @@ import {
   InputAdornment,
     Paper
 } from '@material-ui/core';
+import {Rating} from '@material-ui/lab';
 import AppButton from '../../components/app-button';
 import useStyles from './use-styles';
 
@@ -74,7 +75,7 @@ function TextFieldsBottom() {
             />
           </Grid>
 
-          <Grid item xs={6} className={classes.gridItem}>
+          <Grid item xs={4} className={classes.gridItem}>
             <Typography component="div" align="left">
               Notes
             </Typography>
@@ -89,14 +90,29 @@ function TextFieldsBottom() {
             />
           </Grid>
 
-          <Grid item xs={12} className={cn(classes.gridItem, classes.gridItemButton)}>
-            <AppButton
-                variant="contained"
-                color="primary"
-                className={classes.doneButton}
-            >
-              Done
-            </AppButton>
+          <Grid item xs={2} className={classes.gridItem}>
+            <Typography component="div" align="left">
+              Ease of Weighing
+            </Typography>
+
+            <Rating name="weighing_session.rating" value={null} />
+          </Grid>
+
+          <Grid item xs={8} className={cn(classes.gridItem, classes.gridItemButton)}>
+            <Typography component="div" align="right">
+              Finish and return container to: Freezer 1
+            </Typography>
+          </Grid>
+          <Grid item xs={4} className={cn(classes.gridItem, classes.gridItemButton)}>
+            <Typography component="div" align="left">
+              <AppButton
+                  variant="contained"
+                  color="primary"
+                  className={classes.doneButton}
+              >
+                Finish
+              </AppButton>
+            </Typography>
           </Grid>
         </Grid>
         </Paper>
