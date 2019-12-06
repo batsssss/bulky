@@ -54,14 +54,14 @@ function TextFieldsTop({container, session}) {
         </Grid>
         <Grid item className={classes.gridItem}>
             <TextField
-                placeholder={"0.0000"}
+                placeholder={"0.0"}
                 name="weighing_session.gross_before"
                 id="weighing_session_gross_before"
                 variant="filled"
                 margin="dense"
-                className={cn(classes.textfield, classes.textfieldWhite)}
+                className={classes.textfield}
                 InputProps={{
-                    endAdornment: <InputAdornment position="end">g</InputAdornment>,
+                    endAdornment: <InputAdornment position="end">mg</InputAdornment>,
                 }}
             />
         </Grid>

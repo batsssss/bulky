@@ -5,6 +5,7 @@ import {
     Grid
 } from "@material-ui/core";
 import AppButton from "../../components/app-button";
+import Moment from "react-moment";
 
 function ProductPack(props) {
 
@@ -15,13 +16,15 @@ function ProductPack(props) {
 
     if (productPack.hasOwnProperty('weighing_records')) {
         packagingKeyword = 'in';
-        filledDate = productPack.weighing_records[0].created_at.toString();
+        filledDate = <Moment format="MMM D/YY \at HH:mm">
+            {productPack.weighing_records[0].created_at}
+        </Moment>;
 
         if (productPack.is_ready) {
             status = "Filled";
             filledAmount = productPack.net + "mg";
         } else {
-            status = "Partial";
+            status = "Partial Fill";
             filledAmount = productPack.net + "mg";
             actionButton = <AppButton variant="contained"
                                       color="primary"
@@ -56,7 +59,7 @@ function ProductPack(props) {
                     </Typography>
                 </Grid>
                 <Grid item xs={1}>
-                    <Typography align="left">
+                    <Typography align="center">
                         {status}
                     </Typography>
                 </Grid>
@@ -70,7 +73,7 @@ function ProductPack(props) {
                         {packagingKeyword + ' ' + packagings[productPack.packaging_id]}
                     </Typography>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2}>
                     <Typography align="left">
                         {filledDate}
                     </Typography>

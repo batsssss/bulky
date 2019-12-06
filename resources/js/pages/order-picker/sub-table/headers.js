@@ -20,16 +20,16 @@ const headers = [
     render: renderers.orderedWeight,
   },
   {
-    id: 'actualWeight',
-    name: 'Actual Weight',
+    id: 'quantity',
+    name: 'Quantity',
     align: 'right',
-    render: renderers.actualWeight,
+    render: renderers.quantity,
   },
   {
-    id: 'tracking',
-    name: 'Tracking#',
+    id: 'totalWeight',
+    name: 'Total Weight',
     align: 'right',
-    render: renderers.tracking,
+    render: renderers.totalWeight,
   },
   {
     id: 'status',

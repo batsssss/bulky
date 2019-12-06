@@ -26,19 +26,19 @@ const renderers = {
     if ((isSubTable(row))) {
       return null;
     }
-    return row.product_lot_id || '';
+    return 'Freezer 1' || '';
   },
   currentWeight(row) {
     if ((isSubTable(row))) {
       return null;
     }
-    return row.productLot.remaining || '';
+    return row.productLot.remaining + 'mg' || '';
   },
   totalWeight(row) {
     if ((isSubTable(row))) {
       return null;
     }
-    return '75g';
+    return 'N/A';
   },
   orders(row) {
     if ((isSubTable(row))) {

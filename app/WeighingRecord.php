@@ -32,4 +32,10 @@ class WeighingRecord extends Model
     public function productPack() {
         return $this->belongsTo(ProductPack::class);
     }
+
+    public function getWithProductPack($id) {
+        return $this->with([
+            'productPacks'
+        ])->where('id', '=', $id);
+    }
 }

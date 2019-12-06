@@ -48,16 +48,32 @@ function WeighingForm() {
       setSession(response.data.container.weighing_sessions[0]);
       setPackagings(response.data.packagings);
     });
-  }, []);
+  }, [container]);
 
   const handleStartWeighing = (productPack) => {
     if (weighingRecord.length === 0) {
+      productPack['weighing_session_id'] = session.id;
       axios.post(`/api/start-weighing`, productPack).then(response => {
         setWeighingRecord(response.data.weighing_record);
         setSuggestedPackagingId(response.data.product_pack.packaging_id);
         setIsWeighing(true);
       });
     }
+  };
+
+  const handleSaveWeighingRecord = (event) => {
+    event.preventDefault();
+    const form = new FormData(event.target);
+    let name;
+    let data = {};
+    for (name of form.keys()) {
+      data[name] = form.get(name);
+    }
+    data['id'] = weighingRecord.id;
+    axios.post(`/api/update-weighing-record`, data).then(response => {
+      setWeighingRecord(response.data.weighing_record);
+      setIsWeighing(false);
+    })
   };
 
   if (container.length === 0
@@ -74,6 +90,7 @@ function WeighingForm() {
         weighingRecord={weighingRecord}
         packagings={packagings}
         suggestedPackagingId={suggestedPackagingId}
+        handleSaveWeighingRecord={handleSaveWeighingRecord}
     />
   } else {
     formMiddle = container.product_lot.order_items.map((orderItem) =>

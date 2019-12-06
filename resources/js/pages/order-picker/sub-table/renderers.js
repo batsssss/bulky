@@ -6,13 +6,13 @@ const renderers = {
       return row.scheduled_date || '';
     },
     orderedWeight(row) {
-      return row.size || '';
+      return row.size + 'mg' || '';
     },
-    actualWeight() {
-      return '100g';
+    quantity(row) {
+      return row.quantity || '';
     },
-    tracking() {
-      return 'N/A';
+    totalWeight(row) {
+      return (row.size * row.quantity) + 'mg' || '';
     },
     status() {
       return 'N/A';
