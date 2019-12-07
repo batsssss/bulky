@@ -9,10 +9,12 @@ function OrderItem(props) {
           <List subheader={
             <ListSubheader disableSticky={true}>
               <Typography align="left">
+                <strong>
                 Order {orderItem.order.order_num}
                 - {orderItem.size}mg
                 x {orderItem.quantity}
                 = {orderItem.size * orderItem.quantity}mg
+                </strong>
               </Typography>
             </ListSubheader>
           }>

@@ -104,6 +104,8 @@ function WeighingForm() {
     );
   }
 
+  console.log(container);
+
   return (
     <Container className={classes.rootContainer}>
       <Grid container spacing={3}>

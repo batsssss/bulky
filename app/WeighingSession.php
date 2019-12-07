@@ -49,7 +49,7 @@ class WeighingSession extends Model
         $weighingSession->user_id = 1;
 
         $weighingSession->start_datetime = $this->getNow();
-        $weighingSession->notes = null;
+        $weighingSession->notes = '';
 
         return $weighingSession;
     }
