@@ -48,14 +48,19 @@ class WeighingSession extends Model
         /** @Todo Use logged-in user id */
         $weighingSession->user_id = 1;
 
+        $weighingSession->start_datetime = $this->getNow();
+        $weighingSession->notes = null;
+
+        return $weighingSession;
+    }
+
+    public function getNow() {
         try {
             $now = new DateTime();
         } catch (Exception $exception) {
             $now = null;
         }
 
-        $weighingSession->start_datetime = $now;
-
-        return $weighingSession;
+        return $now;
     }
 }

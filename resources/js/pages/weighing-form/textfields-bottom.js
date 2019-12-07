@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {Redirect} from 'react-router-dom';
 import cn from 'clsx';
 import {
   Grid,
@@ -10,11 +11,48 @@ import {
 import {Rating} from '@material-ui/lab';
 import AppButton from '../../components/app-button';
 import useStyles from './use-styles';
+import {FormContext} from "./weighing-form";
+import axios from "axios";
 
 function TextFieldsBottom() {
+
   const classes = useStyles();
+  const [session, setSession] = useContext(FormContext);
+
+  const [
+    redirect, setRedirect
+  ] = React.useState(false);
+
+  const handleGrossAfterBlur = (event) => {
+    let newSession = {...session};
+    newSession.gross_after = event.target.value;
+    setSession(newSession);
+  };
+
+  const handleNotesBlur = (event) => {
+    let newSession = {...session};
+    newSession.notes = event.target.value;
+    setSession(newSession);
+  };
+
+  const handleRatingBlur = (event) => {
+    let newSession = {...session};
+    newSession.rating = parseInt(event.target.value);
+    setSession(newSession);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios.post(`/api/update-weighing-session`, session).then(response => {
+      setRedirect(true);
+    });
+  };
+
   return (
+
       <React.Fragment>
+        {redirect ? <Redirect to='/order-picker' /> : null}
+
         <Paper className={classes.paper}>
         <Grid container spacing={6}>
           <Grid item xs={3} className={classes.gridItem}>
@@ -35,6 +73,7 @@ function TextFieldsBottom() {
                 InputProps={{
                   endAdornment: <InputAdornment position="end">mg</InputAdornment>,
                 }}
+                onBlur={(event) => handleGrossAfterBlur(event)}
             />
           </Grid>
         </Grid>
@@ -83,10 +122,13 @@ function TextFieldsBottom() {
             <TextField
                 multiline
                 fullWidth
+                name="weighing_session.notes"
+                value={session.notes}
                 rows="1"
                 variant="filled"
                 margin="dense"
                 className={classes.textarea}
+                onBlur={(event) => handleNotesBlur(event)}
             />
           </Grid>
 
@@ -95,7 +137,11 @@ function TextFieldsBottom() {
               Ease of Weighing
             </Typography>
 
-            <Rating name="weighing_session.rating" value={null} />
+            <Rating
+                name="weighing_session.rating"
+                value={session.rating}
+                onChange={(event) => handleRatingBlur(event)}
+            />
           </Grid>
 
           <Grid item xs={8} className={cn(classes.gridItem, classes.gridItemButton)}>
@@ -109,6 +155,8 @@ function TextFieldsBottom() {
                   variant="contained"
                   color="primary"
                   className={classes.doneButton}
+                  type="submit"
+                  onClick={(event) => handleSubmit(event)}
               >
                 Finish
               </AppButton>

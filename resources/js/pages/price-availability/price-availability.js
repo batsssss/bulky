@@ -25,7 +25,7 @@ function PriceAvailability() {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <PageTitle title="Short Name:" subtitle="Long Name" />
+            <PageTitle title="JO903:" subtitle="3-Benzyl amino alpha mannose" />
           </Paper>
         </Grid>
 

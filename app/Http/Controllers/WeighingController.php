@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use DateTime;
+use Illuminate\Http\Response;
 
 use App\ProductLot;
 use App\ProductLotContainer;
@@ -73,6 +73,32 @@ class WeighingController extends Controller
         return json_encode([
             'container' => $container,
             'packagings' => $packagings->toArray()
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function update(Request $request) {
+
+        $data = json_decode($request->getContent(), true);
+
+        /** @var WeighingSession $weighingSession */
+        $weighingSession = WeighingSession::find($data['id']);
+
+        $weighingSession->gross_before = $data['gross_before'];
+        $weighingSession->gross_after = $data['gross_after'];
+        $weighingSession->removed = $data['gross_before'] - $data['gross_after'];
+        $weighingSession->spilled = 0.0;
+        $weighingSession->notes = $data['notes'];
+        $weighingSession->rating = $data['rating'];
+        $weighingSession->end_datetime = (new WeighingSession())->getNow();
+
+        $weighingSession->save();
+
+        return json_encode([
+            'weighing_session' => $weighingSession->toArray()
         ]);
     }
 }

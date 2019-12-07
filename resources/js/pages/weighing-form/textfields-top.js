@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   Grid,
   TextField,
@@ -7,9 +7,17 @@ import {
 } from '@material-ui/core';
 import Moment from 'react-moment';
 import useStyles from './use-styles';
+import {FormContext} from "./weighing-form";
 
-function TextFieldsTop({container, session}) {
+function TextFieldsTop({container}) {
   const classes = useStyles();
+  const [session, setSession] = useContext(FormContext);
+
+  const handleGrossBeforeBlur = (event) => {
+    let newSession = session;
+    newSession.gross_before = event.target.value;
+    setSession(newSession);
+  };
 
   return (
       <React.Fragment>
@@ -58,6 +66,7 @@ function TextFieldsTop({container, session}) {
         <Grid item className={classes.gridItem}>
             <TextField
                 placeholder={"0.0"}
+                defaultValue={session.gross_before}
                 name="weighing_session.gross_before"
                 id="weighing_session_gross_before"
                 variant="filled"
@@ -66,6 +75,7 @@ function TextFieldsTop({container, session}) {
                 InputProps={{
                     endAdornment: <InputAdornment position="end">mg</InputAdornment>,
                 }}
+                onBlur={(event) => handleGrossBeforeBlur(event)}
             />
         </Grid>
     </Grid>

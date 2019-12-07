@@ -4,7 +4,7 @@ import axios from "axios";
 import {
   Paper,
   Grid,
-  Container, CircularProgress, Collapse,
+  Container, CircularProgress
 } from '@material-ui/core';
 import PageTitle from '../../components/page-title';
 import TextFieldsTop from './textfields-top';
@@ -12,6 +12,8 @@ import TextFieldsBottom from './textfields-bottom';
 import OrderItem from './order-item';
 import WeighingRecord from './weighing-record';
 import useStyles from './use-styles';
+
+export const FormContext = React.createContext();
 
 function WeighingForm() {
   const classes = useStyles();
@@ -48,7 +50,7 @@ function WeighingForm() {
       setSession(response.data.container.weighing_sessions[0]);
       setPackagings(response.data.packagings);
     });
-  }, [container]);
+  }, []);
 
   const handleStartWeighing = (productPack) => {
     if (weighingRecord.length === 0) {
@@ -114,13 +116,18 @@ function WeighingForm() {
         <Grid item xs={12}>
           <Paper className={classes.paper}>
 
-            <TextFieldsTop
-                container={container}
-                session={session} />
+            <FormContext.Provider value={[session, setSession]}>
+              <TextFieldsTop
+                  container={container}
+              />
+            </FormContext.Provider>
 
             {formMiddle}
 
-            <TextFieldsBottom />
+            <FormContext.Provider value={[session, setSession]}>
+              <TextFieldsBottom />
+            </FormContext.Provider>
+
           </Paper>
         </Grid>
 

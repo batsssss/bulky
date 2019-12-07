@@ -21,3 +21,4 @@ Route::get('/product-lot-container', 'WeighingController@productLotContainer');
 Route::get('/weighing-form/{containerId}', 'WeighingController@weighingForm');
 Route::post('/start-weighing', 'WeighingRecordController@store');
 Route::post('/update-weighing-record', 'WeighingRecordController@update');
+Route::post('/update-weighing-session', 'WeighingController@update');
